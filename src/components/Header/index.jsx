@@ -1,16 +1,27 @@
 import React from 'react'
-import {HeaderStyle} from './components'
-import {HeaderLink} from './components'
-import {HeaderNav} from './components'
-import {HeaderText} from './components'
+import {
+  HeaderStyle,
+  HeaderLink,
+  HeaderNav,
+  HeaderText,
+  MyLink,
+} from './components'
+import {
+  HOME_PAGE_ROUTE,
+  SETTINGS_PAGE_ROUTE,
+} from '@/constants'
 
 const Header = () => {
   return (
     <HeaderStyle>
       <HeaderText>Calculator App</HeaderText>
       <HeaderNav>
-        <HeaderLink>Home</HeaderLink>
-        <HeaderLink>Setting</HeaderLink>
+        <HeaderLink>
+          <MyLink to={HOME_PAGE_ROUTE}>Home</MyLink>
+        </HeaderLink>
+        <HeaderLink>
+          <MyLink to={SETTINGS_PAGE_ROUTE}>Settings</MyLink>
+        </HeaderLink>
       </HeaderNav>
     </HeaderStyle>
   )

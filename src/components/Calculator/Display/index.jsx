@@ -1,12 +1,21 @@
-import React from 'react' 
-import { InputInfo} from './components'
+import { MyContext } from '@/pages/Home'
+import React, { useContext } from 'react'
+import Keypad from '../Keypad'
+import { InputInfo, TextSpan } from './components'
+import { connect } from 'react-redux'
 
-
-const Display = () => {
-    return (
-      
-        <InputInfo >!!!</InputInfo>
-    
-    )
+const Display = ({ displayValue }) => {
+  return (
+    <InputInfo>
+      <TextSpan>{displayValue}</TextSpan>
+    </InputInfo>
+  )
 }
-export default Display
+
+const mapStateToProps = state => {
+  return {
+    displayValue: state.calculator.display,
+  }
+}
+
+export default connect(mapStateToProps)(Display)
