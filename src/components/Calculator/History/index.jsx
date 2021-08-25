@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { RigthTab, Title } from './components'
+import { RigthTab, Title ,HistoryValues} from './components'
 
 
 const History = ({historyValue}) => {
   return (
     <RigthTab>
       <Title>History</Title>
-      <div>{historyValue.map((value)=><div key={value}>{value}</div>)}</div>
+      <HistoryValues>{historyValue.map((value)=><div key={value}>{value}</div>)}</HistoryValues>
     </RigthTab>
   )
 }

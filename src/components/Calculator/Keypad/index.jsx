@@ -1,6 +1,5 @@
 import { MyContext } from '@/pages/Home'
-import React, { useContext } from 'react'
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { MyTable, MyButton, MyTr } from './components'
 import { connect, useDispatch } from 'react-redux'
 import {
@@ -8,17 +7,39 @@ import {
   updateDisplay,
   clearLastNummer,
   operator,
-calculateResult,
+  calculateResult,
+  updatePrev,
+  deletePrev,
+  changeSign
 } from '@/actions/index'
+import { number } from 'prop-types'
 
 const Keypad = ({
   updateDisplay,
   clearDisplay,
   clearLastNummer,
-  operator,calculateResult,
-  isOperator
+  operator,
+  calculateResult,
+  isOperator,
+  updatePrev,
+  display,
+  prevNumber,
+  result,
+  deletePrev,
+  changeSign
 }) => {
+  const [updated, setUpdated] = useState(false)
+
   const updateDisplayHandler = e => {
+    setUpdated(true)
+    if (
+      (isOperator && !prevNumber) ||
+      typeof display === 'number'
+    ) {
+      updatePrev(display)
+      clearDisplayHandler()
+    }
+    typeof display === 'number' && clearDisplayHandler()
     updateDisplay(e.target.value)
   }
 
@@ -29,20 +50,41 @@ const Keypad = ({
   const clearLastNummerHandler = () => {
     clearLastNummer()
   }
-  const displayOperator = e => {
+
+  const displayOperator = (e) => {
     operator(e.target.value)
   }
-   const calculateHandler = ()=>{
-    isOperator && calculateResult()
-   }
+
+  const calculateHandler = () => {
+    if (isOperator) {
+      if (updated) calculateResult([prevNumber, display])
+      else calculateResult([display, prevNumber])
+
+      if (typeof display !== 'number') updatePrev(display)
+      setUpdated(false)
+    }
+  }
+
+  const deletePrevValue = () => {
+    deletePrev()
+  }
+  
+  const updateDotHandler = (e) => {
+    if (!String(display).includes('.')) {
+      updateDisplay(e.target.value)
+    }
+  }
+
+  const сhangeSignHandler = ()=>{
+    changeSign()
+  }
+  
 
   return (
     <MyTable>
       <MyTr>
         <td>
-          <MyButton onClick={clearDisplayHandler}>
-            C
-          </MyButton>
+          <MyButton onClick={deletePrevValue}>C</MyButton>
         </td>
         <td>
           <MyButton
@@ -73,7 +115,9 @@ const Keypad = ({
       </MyTr>
       <MyTr>
         <td>
-          <MyButton value = '-' onClick= {displayOperator}>-</MyButton>
+          <MyButton value="-" onClick={displayOperator}>
+            -
+          </MyButton>
         </td>
         <td>
           <MyButton
@@ -97,12 +141,16 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton value = '/' onClick= {displayOperator}>/</MyButton>
+          <MyButton value="/" onClick={displayOperator}>
+            /
+          </MyButton>
         </td>
       </MyTr>
       <MyTr>
         <td>
-          <MyButton value = '+' onClick= {displayOperator}>+</MyButton>
+          <MyButton value="+" onClick={displayOperator}>
+            +
+          </MyButton>
         </td>
         <td>
           <MyButton
@@ -126,15 +174,19 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton onClick = {calculateHandler}>=</MyButton>
+          <MyButton onClick={calculateHandler}>=</MyButton>
         </td>
       </MyTr>
       <MyTr>
         <td>
-          <MyButton>.</MyButton>
+          <MyButton
+            value="."
+            onClick={updateDotHandler}>
+            .
+          </MyButton>
         </td>
         <td>
-          <MyButton>(</MyButton>
+          <MyButton value = '%' onClick= {displayOperator}>%</MyButton>
         </td>
         <td>
           <MyButton
@@ -144,7 +196,7 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton>)</MyButton>
+          <MyButton  onClick= {сhangeSignHandler}>+-</MyButton>
         </td>
         <td>
           <MyButton onClick={clearLastNummerHandler}>
@@ -161,12 +213,18 @@ const mapDispatchToProps = {
   clearDisplay,
   clearLastNummer,
   operator,
-  calculateResult
+  calculateResult,
+  updatePrev,
+  deletePrev,
+  changeSign
 }
 
 const mapStateToProps = state => {
   return {
     isOperator: state.calculator.operator,
+    display: state.calculator.display,
+    prevNumber: state.calculator.prevNumber,
+    resultNumber: state.calculator.result,
   }
 }
 

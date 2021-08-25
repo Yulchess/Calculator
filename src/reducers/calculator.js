@@ -4,8 +4,8 @@ import { handleActions } from 'redux-actions'
 const initialState = {
   display: '0',
   operator: null,
-  secondValue: 0,
-  result: 0,
+  prevNumber: 0,
+  // result: 0,
   history: [],
 }
 
@@ -22,6 +22,9 @@ function calculateValues(operator, numbers) {
 
     case '*':
       return numbers[0] * numbers[1]
+
+    case '%':
+      return numbers[0] % numbers[1]
   }
 }
 
@@ -34,65 +37,60 @@ const calculatorReducer = (
       return {
         ...state,
         display:
-          state.display === '0' ||
-          state.operator !== initialState.operator
+          state.display === initialState.display
             ? action.payload
             : state.display + action.payload,
-
-        secondValue:
-          state.operator && !state.secondValue
-            ? state.display
-            : state.secondValue,
-
-        // display: calculateValues(state.operator, [
-        //   +state.secondValue,
-        //   +state.display,
-        // ]),
+      }
+    case CALCULATOR_ACTIONS.UPDATE_PREV:
+      return {
+        ...state,
+        prevNumber: action.payload,
       }
     case CALCULATOR_ACTIONS.CLEAR_DISPLAY:
       return {
         ...state,
         display: initialState.display,
-        secondValue: initialState.secondValue,
-        operator: initialState.operator,
-        result: initialState.result,
       }
     case CALCULATOR_ACTIONS.CLEAR_LAST_NUMBER:
       return {
         ...state,
-        display: state.display.slice(0, -1),
+        display: state.display.toString().slice(0, -1),
       }
     case CALCULATOR_ACTIONS.OPERATOR:
       return {
         ...state,
         operator: action.payload,
-        result:
-          state.secondValue && state.display
-            ? calculateValues(state.operator, [
-                +state.secondValue,
-                +state.display,
-              ])
-            : state.display,
       }
     case CALCULATOR_ACTIONS.CALCULATE_RESULT:
+      let calculating = calculateValues(state.operator, [
+        +action.payload[0],
+        +action.payload[1],
+      ])
+      calculating = Number.isInteger(calculating)
+        ? calculating
+        : calculating.toFixed(3)
       return {
         ...state,
-        display: calculateValues(state.operator, [
-          +state.secondValue,
-          +state.display,
-        ]),
-
-        operator: initialState.operator,
-        secondValue: initialState.secondValue,
+        display: +calculating,
         history: [
           ...state.history,
-          `${state.secondValue} ${state.operator} ${
-            state.display
-          } = ${calculateValues(state.operator, [
-            +state.secondValue,
-            +state.display,
-          ])}`,
+          `${action.payload[0]} ${state.operator} ${
+            action.payload[1]
+          } = ${calculating}`,
         ],
+      }
+
+    case CALCULATOR_ACTIONS.DELETE_PREV:
+      return {
+        ...state,
+        prevNumber: initialState.prevNumber,
+        operator: initialState.operator,
+        display: initialState.display,
+      }
+    case CALCULATOR_ACTIONS.CHANGE_SIGN:
+      return {
+        ...state,
+        display: (Number(state.display) * -1).toString(),
       }
 
     default:

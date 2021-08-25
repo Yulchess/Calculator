@@ -5,6 +5,9 @@ export const CALCULATOR_ACTIONS = {
   OPERATOR: 'OPERATOR',
   SECOND_VALUE: 'SECOND_VALUE',
   CALCULATE_RESULT: 'CALCULATE_RESULT',
+  UPDATE_PREV: 'UPDATE_PREV',
+  DELETE_PREV: 'DELETE_PREV',
+  CHANGE_SIGN: 'CHANGE_SIGN',
 }
 
 export function updateDisplay(value) {
@@ -31,8 +34,28 @@ export function operator(value) {
   }
 }
 
-export function calculateResult() {
+export function calculateResult(value) {
   return {
     type: CALCULATOR_ACTIONS.CALCULATE_RESULT,
+    payload: value,
+  }
+}
+
+export function updatePrev(value) {
+  return {
+    type: CALCULATOR_ACTIONS.UPDATE_PREV,
+    payload: value,
+  }
+}
+
+export function deletePrev() {
+  return {
+    type: CALCULATOR_ACTIONS.DELETE_PREV,
+  }
+}
+
+export function changeSign() {
+  return {
+    type: CALCULATOR_ACTIONS.CHANGE_SIGN,
   }
 }
