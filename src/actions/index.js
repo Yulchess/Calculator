@@ -1,14 +1,4 @@
-export const CALCULATOR_ACTIONS = {
-  UPDATE_DISPLAY: 'UPDATE_DISPLAY',
-  CLEAR_DISPLAY: 'CLEAR_DISPLAY',
-  CLEAR_LAST_NUMBER: 'CLEAR_LAST_NUMBER',
-  OPERATOR: 'OPERATOR',
-  SECOND_VALUE: 'SECOND_VALUE',
-  CALCULATE_RESULT: 'CALCULATE_RESULT',
-  UPDATE_PREV: 'UPDATE_PREV',
-  DELETE_PREV: 'DELETE_PREV',
-  CHANGE_SIGN: 'CHANGE_SIGN',
-}
+import { CALCULATOR_ACTIONS } from '@/constants/actions'
 
 export function updateDisplay(value) {
   return {
@@ -57,5 +47,16 @@ export function deletePrev() {
 export function changeSign() {
   return {
     type: CALCULATOR_ACTIONS.CHANGE_SIGN,
+  }
+}
+
+export function clearHistory() {
+  return { type: CALCULATOR_ACTIONS.CLEAR_HISTORY }
+}
+
+export function getLocalStorage(value) {
+  return {
+    type: CALCULATOR_ACTIONS.GET_LOCAL_STORE,
+    payload: value,
   }
 }

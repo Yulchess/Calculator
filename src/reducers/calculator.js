@@ -1,31 +1,11 @@
-import { CALCULATOR_ACTIONS, operator } from '@/actions'
-import { handleActions } from 'redux-actions'
+import { calculateValues } from '@/helpers/index'
+import { CALCULATOR_ACTIONS } from '@/constants/actions'
 
 const initialState = {
   display: '0',
   operator: null,
   prevNumber: 0,
-  // result: 0,
   history: [],
-}
-
-function calculateValues(operator, numbers) {
-  switch (operator) {
-    case '+':
-      return numbers[0] + numbers[1]
-
-    case '-':
-      return numbers[0] - numbers[1]
-
-    case '/':
-      return numbers[0] / numbers[1]
-
-    case '*':
-      return numbers[0] * numbers[1]
-
-    case '%':
-      return numbers[0] % numbers[1]
-  }
 }
 
 const calculatorReducer = (
@@ -92,7 +72,16 @@ const calculatorReducer = (
         ...state,
         display: (Number(state.display) * -1).toString(),
       }
-
+    case CALCULATOR_ACTIONS.CLEAR_HISTORY:
+      return {
+        ...state,
+        history: initialState.history,
+      }
+    case CALCULATOR_ACTIONS.GET_LOCAL_STORE:
+      return {
+        ...state,
+        ...action.payload,
+      }
     default:
       return state
   }

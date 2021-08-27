@@ -1,21 +1,76 @@
-import React from 'react'
-import {BackgroundSetting,BlockTheme,OptionChange,OptionSelect} from "./components"
+import React,{useState} from 'react'
+import {
+  BackgroundSetting,
+  BlockTheme,
+  OptionChange,
+  OptionSelect,
+  TitleHeader,
+  MyButton,
+} from './components'
+import { clearHistory } from '@/actions/index'
+import theme, {
+  coloredTheme,
+  darkTheme,
+  lightTheme,
+} from '@/theme'
+import { connect } from 'react-redux'
+import Display from '@/components/Calculator/Display'
 
-export default () => {
+const mapDispatchToProps = {
+  clearHistory,
+}
+
+export default connect(
+  null,
+  mapDispatchToProps,
+)(({setTheme,clearHistory}) => {
+  const [value, setValue] = useState('dark')
+  
+  const changeThemeHandler = e => {
+    switch (e.target.value) {
+      case 'light':
+        setValue(e.target.value)
+        setTheme(lightTheme)
+        break
+      case 'dark':
+        setValue(e.target.value)
+        setTheme(darkTheme)
+        break
+      case 'colored':
+        setValue(e.target.value)
+        setTheme(coloredTheme)
+        break
+    }
+  }
+
+  function clearHistoryHandle() {
+    clearHistory()
+  }
+
   return (
     <BackgroundSetting>
-      <h1>Settings</h1>
+      <TitleHeader>Settings</TitleHeader>
       <div>
         <p>Switch Theme</p>
-        <OptionSelect>
-          <OptionChange>Ligth Theme</OptionChange>
-          <OptionChange>Colored Theme</OptionChange>
-          <OptionChange>Dark Theme</OptionChange>
+        <OptionSelect
+          onChange={changeThemeHandler}
+          value={value}>
+          <OptionChange value="light">
+            Ligth Theme
+          </OptionChange>
+          <OptionChange value="colored">
+            Colored Theme
+          </OptionChange>
+          <OptionChange value="dark">
+            Dark Theme
+          </OptionChange>
         </OptionSelect>
-        <BlockTheme>
-          <p>Clear All History</p>
-        </BlockTheme>
+        <div>
+          <MyButton onClick={clearHistoryHandle}>
+            Clear All History
+          </MyButton>
+        </div>
       </div>
     </BackgroundSetting>
   )
-}
+})

@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-
+import styled from 'styled-components'
 import theme from './theme'
 
 export default createGlobalStyle`
@@ -31,6 +31,8 @@ export default createGlobalStyle`
 
   #root {
     display: flex;
-    background: linear-gradient(to bottom, #c06c84da, #6c5b7bda);
+    // background: ${theme.colors.primary};
+    background: ${props =>
+      props.theme.backgroundColor.primary};
   }
 `

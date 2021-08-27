@@ -13,3 +13,9 @@ export const store = createStore(
 )
 
 sagaMiddleware.run(rootSaga)
+
+store.subscribe(() => {
+  localStorage['redux-store'] = JSON.stringify(
+    store.getState(),
+  )
+})

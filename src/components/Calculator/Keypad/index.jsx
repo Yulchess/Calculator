@@ -1,7 +1,6 @@
-import { MyContext } from '@/pages/Home'
 import React, { useContext, useState } from 'react'
 import { MyTable, MyButton, MyTr } from './components'
-import { connect, useDispatch } from 'react-redux'
+import { connect } from 'react-redux'
 import {
   clearDisplay,
   updateDisplay,
@@ -10,9 +9,8 @@ import {
   calculateResult,
   updatePrev,
   deletePrev,
-  changeSign
+  changeSign,
 } from '@/actions/index'
-import { number } from 'prop-types'
 
 const Keypad = ({
   updateDisplay,
@@ -24,9 +22,8 @@ const Keypad = ({
   updatePrev,
   display,
   prevNumber,
-  result,
   deletePrev,
-  changeSign
+  changeSign,
 }) => {
   const [updated, setUpdated] = useState(false)
 
@@ -51,12 +48,12 @@ const Keypad = ({
     clearLastNummer()
   }
 
-  const displayOperator = (e) => {
+  const displayOperatorHandler = e => {
     operator(e.target.value)
   }
 
   const calculateHandler = () => {
-    if (isOperator) {
+    if (isOperator && display) {
       if (updated) calculateResult([prevNumber, display])
       else calculateResult([display, prevNumber])
 
@@ -65,26 +62,25 @@ const Keypad = ({
     }
   }
 
-  const deletePrevValue = () => {
+  const deletePrevValueHandler = () => {
     deletePrev()
   }
-  
-  const updateDotHandler = (e) => {
+
+  const updateDotHandler = e => {
     if (!String(display).includes('.')) {
       updateDisplay(e.target.value)
     }
   }
 
-  const сhangeSignHandler = ()=>{
+  const сhangeSignHandler = () => {
     changeSign()
   }
-  
 
   return (
     <MyTable>
       <MyTr>
         <td>
-          <MyButton onClick={deletePrevValue}>C</MyButton>
+          <MyButton onClick={deletePrevValueHandler}>C</MyButton>
         </td>
         <td>
           <MyButton
@@ -108,14 +104,14 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton value="*" onClick={displayOperator}>
+          <MyButton value="*" onClick={displayOperatorHandler }>
             *
           </MyButton>
         </td>
       </MyTr>
       <MyTr>
         <td>
-          <MyButton value="-" onClick={displayOperator}>
+          <MyButton value="-" onClick={displayOperatorHandler }>
             -
           </MyButton>
         </td>
@@ -141,14 +137,14 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton value="/" onClick={displayOperator}>
+          <MyButton value="/" onClick={displayOperatorHandler }>
             /
           </MyButton>
         </td>
       </MyTr>
       <MyTr>
         <td>
-          <MyButton value="+" onClick={displayOperator}>
+          <MyButton value="+" onClick={displayOperatorHandler }>
             +
           </MyButton>
         </td>
@@ -179,14 +175,14 @@ const Keypad = ({
       </MyTr>
       <MyTr>
         <td>
-          <MyButton
-            value="."
-            onClick={updateDotHandler}>
+          <MyButton value="." onClick={updateDotHandler}>
             .
           </MyButton>
         </td>
         <td>
-          <MyButton value = '%' onClick= {displayOperator}>%</MyButton>
+          <MyButton value="%" onClick={displayOperatorHandler }>
+            %
+          </MyButton>
         </td>
         <td>
           <MyButton
@@ -196,7 +192,9 @@ const Keypad = ({
           </MyButton>
         </td>
         <td>
-          <MyButton  onClick= {сhangeSignHandler}>+-</MyButton>
+          <MyButton onClick={сhangeSignHandler}>
+            +-
+          </MyButton>
         </td>
         <td>
           <MyButton onClick={clearLastNummerHandler}>
@@ -216,7 +214,7 @@ const mapDispatchToProps = {
   calculateResult,
   updatePrev,
   deletePrev,
-  changeSign
+  changeSign,
 }
 
 const mapStateToProps = state => {

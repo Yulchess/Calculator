@@ -19,7 +19,8 @@ export const MyButton = styled.button`
   width: 80px;
   height: 80px;
   border-radius: 20px;
-  border-color: ${theme.colors.white};
+  background-color: ${props =>
+    props.theme.backgroundColor.primary};
   font-size: 36px;
   font-weight: 500;
   cursor: pointer;

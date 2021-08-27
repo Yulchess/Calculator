@@ -1,5 +1,4 @@
-import { MyContext } from '@/pages/Home'
-import React, { useContext } from 'react'
+import React from 'react'
 import Keypad from '../Keypad'
 import { InputInfo, TextSpan } from './components'
 import { connect } from 'react-redux'
@@ -7,14 +6,14 @@ import { connect } from 'react-redux'
 const Display = ({ displayValue }) => {
   return (
     <InputInfo>
-      <TextSpan>{ displayValue }</TextSpan>
+      <TextSpan>{displayValue}</TextSpan>
     </InputInfo>
   )
 }
 
 const mapStateToProps = state => {
   return {
-    displayValue: state.calculator.display
+    displayValue: state.calculator.display,
   }
 }
 
