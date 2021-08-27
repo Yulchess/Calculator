@@ -1356,6 +1356,33 @@
 
 /* 20 */
 
+/*
+  MIT License http://www.opensource.org/licenses/mit-license.php
+  Author Tobias Koppers @sokra
+*/
+
+// css base code, injected by the css-loader
+
+// eslint-disable-next-line func-names
+
+// return the list of modules as css string
+
+// eslint-disable-next-line prefer-destructuring
+
+// Adapted from convert-source-map (MIT)
+
+// import a list of modules into the list
+
+// skip already imported module
+
+// this implementation is not 100% perfect for weird media query combinations
+
+// when a module is imported multiple times with different media queries.
+
+// I hope this will never occur (Hey this way we have smaller bundles)
+
+/* 21 */
+
 // DCE check should happen before ReactDOM bundle executes so that
 
 // DevTools can report bad minification during injection.
@@ -1368,19 +1395,19 @@
 
 // We should still report in case we break this code.
 
-/* 21 */
-
 /* 22 */
 
 /* 23 */
 
-//# sourceMappingURL=stylis.min.js.map
-
 /* 24 */
+
+//# sourceMappingURL=stylis.min.js.map
 
 /* 25 */
 
 /* 26 */
+
+/* 27 */
 
 /**
  * Expose `pathToRegexp`.
@@ -1549,13 +1576,13 @@
 
 /** @type {string} */
 
-/* 27 */
+/* 28 */
 
 /* global window */
 
-/* 28 */
-
 /* 29 */
+
+/* 30 */
 
 /*
 object-assign
@@ -1575,7 +1602,7 @@ object-assign
 
 // We don't expect any of the above to throw, but better to be safe.
 
-/* 30 */
+/* 31 */
 
 // This works in non-strict mode
 
@@ -1589,8 +1616,6 @@ object-assign
 
 // easier to handle this case. if(!global) { ...}
 
-/* 31 */
-
 /* 32 */
 
 /* 33 */
@@ -1598,6 +1623,8 @@ object-assign
 /* 34 */
 
 /* 35 */
+
+/* 36 */
 
 // property
 
@@ -1609,17 +1636,15 @@ object-assign
 
 // @font-face, @page
 
-/* 36 */
+/* 37 */
 
 // SVG-related properties
 
-/* 37 */
-
 /* 38 */
 
-// @flow
-
 /* 39 */
+
+// @flow
 
 /* 40 */
 
@@ -1628,6 +1653,8 @@ object-assign
 /* 42 */
 
 /* 43 */
+
+/* 44 */
 
 // CONCATENATED MODULE: ./node_modules/@emotion/memoize/dist/memoize.browser.esm.js
 
@@ -1639,7 +1666,7 @@ object-assign
 
 // CONCATENATED MODULE: ./node_modules/@emotion/is-prop-valid/dist/is-prop-valid.browser.esm.js
 
-/* 44 */
+/* 45 */
 
 // CONCATENATED MODULE: ./node_modules/is-what/dist/index.esm.js
 
@@ -1720,13 +1747,59 @@ object-assign
 
 // When newVal is an object do the merge recursively
 
-/* 45 */
-
 /* 46 */
+
+/* 47 */
 
 // EXTERNAL MODULE: ./node_modules/@babel/runtime/helpers/slicedToArray.js
 
-/* 47 */
+/* 48 */
+
+/* 49 */
+
+// Imports
+
+// Module
+
+/* 50 */
+
+/* 51 */
+
+/* 52 */
+
+/* 53 */
+
+// Test for IE <= 9 as proposed by Browserhacks
+
+// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
+
+// Tests for existence of standard globals is to allow style-loader
+
+// to operate correctly into non-standard environments
+
+// @see https://github.com/webpack-contrib/style-loader/issues/177
+
+// Special case to return head of iframe instead of iframe itself
+
+// This will throw an exception if access to iframe is blocked
+
+// due to cross-origin restrictions
+
+// istanbul ignore next
+
+/* istanbul ignore next  */
+
+// For old IE
+
+/* istanbul ignore if  */
+
+// istanbul ignore if
+
+// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
+
+// tags it will allow on a page
+
+/* 54 */
 
 /** @license React v16.11.0
  * react.production.min.js
@@ -1737,7 +1810,7 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/* 48 */
+/* 55 */
 
 /** @license React v16.11.0
  * react-dom.production.min.js
@@ -1752,9 +1825,9 @@ object-assign
  Modernizr 3.0.0pre (Custom Build) | MIT
 */
 
-/* 49 */
+/* 56 */
 
-/* 50 */
+/* 57 */
 
 /** @license React v0.17.0
  * scheduler.production.min.js
@@ -1765,15 +1838,15 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/* 51 */
+/* 58 */
 
 // Important!
 
 // Keep this list in sync with production version in `./factoryWithTypeCheckers.js`.
 
-/* 52 */
+/* 59 */
 
-/* 53 */
+/* 60 */
 
 /** @license React v16.11.0
  * react-is.production.min.js
@@ -1784,13 +1857,13 @@ object-assign
  * LICENSE file in the root directory of this source tree.
  */
 
-/* 54 */
+/* 61 */
 
-/* 55 */
+/* 62 */
 
-/* 56 */
+/* 63 */
 
-/* 57 */
+/* 64 */
 
 // shim for using process in browser
 
@@ -1824,25 +1897,11 @@ object-assign
 
 // empty string to avoid regexp issues
 
-/* 58 */
+/* 65 */
 
 /**
    * @return {null}
    */
-
-/* 59 */
-
-/* 60 */
-
-/* 61 */
-
-/* 62 */
-
-/* 63 */
-
-/* 64 */
-
-/* 65 */
 
 /* 66 */
 
@@ -1870,8 +1929,6 @@ object-assign
 
 /* 78 */
 
-// module.parent = undefined by default
-
 /* 79 */
 
 /* 80 */
@@ -1879,6 +1936,22 @@ object-assign
 /* 81 */
 
 /* 82 */
+
+/* 83 */
+
+/* 84 */
+
+/* 85 */
+
+// module.parent = undefined by default
+
+/* 86 */
+
+/* 87 */
+
+/* 88 */
+
+/* 89 */
 
 /**
  * Copyright (c) 2014-present, Facebook, Inc.
@@ -2137,7 +2210,9 @@ object-assign
 
 // problems, please detail your unique predicament in a GitHub issue.
 
-/* 83 */
+/* 90 */
+
+// EXTERNAL MODULE: ./node_modules/react-loader-spinner/dist/loader/css/react-spinner-loader.css
 
 // CONCATENATED MODULE: ./src/globalStyles.js
 
@@ -2358,5 +2433,3 @@ object-assign
 // CONCATENATED MODULE: ./src/store.js
 
 // CONCATENATED MODULE: ./src/index.js
-
-// import 'react-loader-spinner/dist/loader/css/react-spinner-loader.css'
