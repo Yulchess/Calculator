@@ -1,5 +1,3 @@
-// @todo: add some helpers
-
 export function calculateValues(operator, numbers) {
   switch (operator) {
     case '+':
@@ -16,5 +14,8 @@ export function calculateValues(operator, numbers) {
 
     case '%':
       return numbers[0] % numbers[1]
+
+    default:
+      break
   }
 }

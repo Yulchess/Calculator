@@ -1,27 +1,26 @@
 import React from 'react'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
+
 import {
-  RigthTab,
-  Title,
   HistoryValues,
-} from './components'
+  HistoryWrapper,
+  TitleHistory,
+} from '@/components/Calculator/History/styles'
 
 const History = ({ historyValue }) => {
+  const history = useSelector(
+    state => state.calculator.history,
+  )
   return (
-    <RigthTab>
-      <Title>History</Title>
+    <HistoryWrapper>
+      <TitleHistory>History</TitleHistory>
       <HistoryValues>
-        {historyValue.map(value => (
+        {history.map(value => (
           <div key={value}>{value}</div>
         ))}
       </HistoryValues>
-    </RigthTab>
+    </HistoryWrapper>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    historyValue: state.calculator.history,
-  }
-}
-export default connect(mapStateToProps)(History)
+export default History

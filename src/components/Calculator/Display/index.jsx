@@ -1,20 +1,21 @@
 import React from 'react'
-import Keypad from '../Keypad'
-import { InputInfo, TextSpan } from './components'
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 
-const Display = ({ displayValue }) => {
+import {
+  InputInfo,
+  TextSpan,
+} from '@/components/Calculator/Display/styles'
+
+const Display = () => {
+  const display = useSelector(
+    state => state.calculator.display,
+  )
+
   return (
     <InputInfo>
-      <TextSpan>{displayValue}</TextSpan>
+      <TextSpan>{display}</TextSpan>
     </InputInfo>
   )
 }
 
-const mapStateToProps = state => {
-  return {
-    displayValue: state.calculator.display,
-  }
-}
-
-export default connect(mapStateToProps)(Display)
+export default Display

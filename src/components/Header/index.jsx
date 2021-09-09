@@ -1,11 +1,12 @@
 import React from 'react'
+
 import {
-  HeaderStyle,
   HeaderLink,
   HeaderNav,
+  HeaderStyle,
   HeaderText,
   MyLink,
-} from './components'
+} from '@/components/Header/styles'
 import {
   HOME_PAGE_ROUTE,
   SETTINGS_PAGE_ROUTE,

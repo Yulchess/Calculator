@@ -1,19 +1,20 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-import { PageLayout } from '@/layouts'
+import Display from '@/components/Calculator/Display/index'
+import History from '@/components/Calculator/History/index'
+import Keypad from '@/components/Calculator/Keypad/index'
 
-import Loader from '@/components/Loader'
+import { Container, ContentWrapper } from './styles'
 
-import { Card, Heading } from './components'
-import Header from '@/components/Header'
-import Display from '@/components/Calculator/Display'
-import Keypad from '@/components/Calculator/Keypad'
-import Calculator from '@/components/Calculator'
-
-
-
-export default () => {
+const HomePage = () => {
   return (
-      <Calculator />
+    <Container>
+      <ContentWrapper>
+        <Display />
+        <Keypad />
+      </ContentWrapper>
+      <History />
+    </Container>
   )
 }
+export default HomePage

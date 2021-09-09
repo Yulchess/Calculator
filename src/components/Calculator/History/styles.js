@@ -1,9 +1,11 @@
-import theme from '@/theme'
 import styled from 'styled-components'
 
-export const RigthTab = styled.div`
-  padding: 20px;
-  border-left: 2px solid ${theme.colors.gray};
+import theme from '@/theme'
+
+export const HistoryWrapper = styled.div`
+  padding: ${theme.spaces[6]}px;
+  border-left: ${theme.spaces[1]}px solid
+    ${theme.colors.gray};
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -15,16 +17,16 @@ export const RigthTab = styled.div`
   }
   &::-webkit-scrollbar-thumb {
     background-color: ${theme.colors.darkGray};
-    border: 5px solid transparent;
-    border-radius: 10px;
+    border: ${theme.spaces[3]}px solid transparent;
+    border-radius: ${theme.spaces[5]}px;
     background-clip: content-box;
   }
 `
-export const Title = styled.p`
+export const TitleHistory = styled.p`
   margin: 0 auto;
-  font-size: 20px;
-  margin-bottom: 10px;
+  font-size: ${theme.spaces[7]}px;
+  margin-bottom: ${theme.spaces[5]}px;
 `
 export const HistoryValues = styled.div`
-  font-size: 19px;
+  font-size: ${theme.spaces[15]}px;
 `

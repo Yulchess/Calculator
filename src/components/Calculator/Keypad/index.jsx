@@ -1,232 +1,139 @@
-import React, { useContext, useState } from 'react'
-import { MyTable, MyButton, MyTr } from './components'
-import { connect } from 'react-redux'
+import React, { useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
 import {
-  clearDisplay,
-  updateDisplay,
-  clearLastNummer,
-  operator,
-  calculateResult,
-  updatePrev,
-  deletePrev,
-  changeSign,
+  calculateResultAction,
+  changeSignAction,
+  clearDisplayAction,
+  clearLastNummerAction,
+  deletePrevAction,
+  operatorAction,
+  updateDisplayAction,
+  updatePrevAction,
 } from '@/actions/index'
+import {
+  ButtonKeypad,
+  KeypadColumn,
+  KeypadRow,
+  KeypadWrapper,
+} from '@/components/Calculator/Keypad/styles'
 
-const Keypad = ({
-  updateDisplay,
-  clearDisplay,
-  clearLastNummer,
-  operator,
-  calculateResult,
-  isOperator,
-  updatePrev,
-  display,
-  prevNumber,
-  deletePrev,
-  changeSign,
-}) => {
+const Keypad = () => {
+  const dispatch = useDispatch()
   const [updated, setUpdated] = useState(false)
-
-  const updateDisplayHandler = e => {
+  const isOperator = useSelector(
+    state => state.calculator.operator,
+  )
+  const prevNumber = useSelector(
+    state => state.calculator.prevNumber,
+  )
+  const display = useSelector(
+    state => state.calculator.display,
+  )
+  const updateDisplayHandler = event => {
     setUpdated(true)
     if (
       (isOperator && !prevNumber) ||
       typeof display === 'number'
     ) {
-      updatePrev(display)
+      dispatch(updatePrevAction(display))
       clearDisplayHandler()
     }
     typeof display === 'number' && clearDisplayHandler()
-    updateDisplay(e.target.value)
+    dispatch(updateDisplayAction(event.target.value))
   }
 
   const clearDisplayHandler = () => {
-    clearDisplay()
+    dispatch(clearDisplayAction())
   }
 
   const clearLastNummerHandler = () => {
-    clearLastNummer()
+    dispatch(clearLastNummerAction())
   }
 
-  const displayOperatorHandler = e => {
-    operator(e.target.value)
+  const displayOperatorHandler = event => {
+    dispatch(operatorAction(event.target.value))
   }
 
   const calculateHandler = () => {
     if (isOperator && display) {
-      if (updated) calculateResult([prevNumber, display])
-      else calculateResult([display, prevNumber])
+      if (updated)
+        dispatch(
+          calculateResultAction([prevNumber, display]),
+        )
+      else
+        dispatch(
+          calculateResultAction([display, prevNumber]),
+        )
 
-      if (typeof display !== 'number') updatePrev(display)
+      if (typeof display !== 'number')
+        dispatch(updatePrevAction(display))
       setUpdated(false)
     }
   }
 
   const deletePrevValueHandler = () => {
-    deletePrev()
+    dispatch(deletePrevAction())
   }
 
-  const updateDotHandler = e => {
+  const updateDotHandler = event => {
     if (!String(display).includes('.')) {
-      updateDisplay(e.target.value)
+      dispatch(updateDisplayAction(event.target.value))
     }
   }
 
   const сhangeSignHandler = () => {
-    changeSign()
+    dispatch(changeSignAction())
   }
 
+  const keys = [
+    [
+      { value: 'C', method: deletePrevValueHandler },
+      { value: '7', method: updateDisplayHandler },
+      { value: '8', method: updateDisplayHandler },
+      { value: '9', method: updateDisplayHandler },
+      { value: '*', method: displayOperatorHandler },
+    ],
+    [
+      { value: '-', method: displayOperatorHandler },
+      { value: '4', method: updateDisplayHandler },
+      { value: '5', method: updateDisplayHandler },
+      { value: '6', method: updateDisplayHandler },
+      { value: '/', method: displayOperatorHandler },
+    ],
+    [
+      { value: '+', method: displayOperatorHandler },
+      { value: '1', method: updateDisplayHandler },
+      { value: '2', method: updateDisplayHandler },
+      { value: '3', method: updateDisplayHandler },
+      { value: '=', method: calculateHandler },
+    ],
+    [
+      { value: '.', method: updateDotHandler },
+      { value: '%', method: displayOperatorHandler },
+      { value: '0', method: updateDisplayHandler },
+      { value: '+-', method: сhangeSignHandler },
+      { value: 'CE', method: clearLastNummerHandler },
+    ],
+  ]
+
   return (
-    <MyTable>
-      <MyTr>
-        <td>
-          <MyButton onClick={deletePrevValueHandler}>C</MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={7}
-            onClick={updateDisplayHandler}>
-            7
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={8}
-            onClick={updateDisplayHandler}>
-            8
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={9}
-            onClick={updateDisplayHandler}>
-            9
-          </MyButton>
-        </td>
-        <td>
-          <MyButton value="*" onClick={displayOperatorHandler }>
-            *
-          </MyButton>
-        </td>
-      </MyTr>
-      <MyTr>
-        <td>
-          <MyButton value="-" onClick={displayOperatorHandler }>
-            -
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={4}
-            onClick={updateDisplayHandler}>
-            4
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={5}
-            onClick={updateDisplayHandler}>
-            5
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={6}
-            onClick={updateDisplayHandler}>
-            6
-          </MyButton>
-        </td>
-        <td>
-          <MyButton value="/" onClick={displayOperatorHandler }>
-            /
-          </MyButton>
-        </td>
-      </MyTr>
-      <MyTr>
-        <td>
-          <MyButton value="+" onClick={displayOperatorHandler }>
-            +
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={1}
-            onClick={updateDisplayHandler}>
-            1
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={2}
-            onClick={updateDisplayHandler}>
-            2
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={3}
-            onClick={updateDisplayHandler}>
-            3
-          </MyButton>
-        </td>
-        <td>
-          <MyButton onClick={calculateHandler}>=</MyButton>
-        </td>
-      </MyTr>
-      <MyTr>
-        <td>
-          <MyButton value="." onClick={updateDotHandler}>
-            .
-          </MyButton>
-        </td>
-        <td>
-          <MyButton value="%" onClick={displayOperatorHandler }>
-            %
-          </MyButton>
-        </td>
-        <td>
-          <MyButton
-            value={0}
-            onClick={updateDisplayHandler}>
-            0
-          </MyButton>
-        </td>
-        <td>
-          <MyButton onClick={сhangeSignHandler}>
-            +-
-          </MyButton>
-        </td>
-        <td>
-          <MyButton onClick={clearLastNummerHandler}>
-            CE
-          </MyButton>
-        </td>
-      </MyTr>
-    </MyTable>
+    <KeypadWrapper>
+      {keys.map((rows, index) => (
+        <KeypadRow key={index}>
+          {rows.map(column => (
+            <KeypadColumn key={column.value}>
+              <ButtonKeypad
+                value={column.value}
+                onClick={event => column.method(event)}>
+                {column.value}
+              </ButtonKeypad>
+            </KeypadColumn>
+          ))}
+        </KeypadRow>
+      ))}
+    </KeypadWrapper>
   )
 }
 
-const mapDispatchToProps = {
-  updateDisplay,
-  clearDisplay,
-  clearLastNummer,
-  operator,
-  calculateResult,
-  updatePrev,
-  deletePrev,
-  changeSign,
-}
-
-const mapStateToProps = state => {
-  return {
-    isOperator: state.calculator.operator,
-    display: state.calculator.display,
-    prevNumber: state.calculator.prevNumber,
-    resultNumber: state.calculator.result,
-  }
-}
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(Keypad)
+export default Keypad

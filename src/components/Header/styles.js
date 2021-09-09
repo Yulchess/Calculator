@@ -1,5 +1,6 @@
-import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import styled from 'styled-components'
+
 import theme from '@/theme'
 
 export const HeaderStyle = styled.div`
@@ -8,9 +9,8 @@ export const HeaderStyle = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 70px;
-  padding: 20px;
-  // border: 1px solid ${theme.colors.gray};
+  height: ${theme.spaces[16]}px;
+  padding: ${theme.spaces[7]}px;
 `
 export const HeaderLink = styled.li`
   list-style-type: none;
@@ -19,9 +19,9 @@ export const HeaderLink = styled.li`
     text-decoration: underline;
     color: ${props => props.theme.textColor.primary};
   }
-  margin-left: 32px;
-  font-size: 24px;
-  font-width: 100;
+  margin-left: ${theme.fontSizes[5]}px;
+  font-size: ${theme.spaces[8]}px;
+  font-width: ${theme.fontSizes[12]};
 
   color: ${props => props.theme.navColor.primary};
 `
@@ -29,10 +29,10 @@ export const HeaderNav = styled.ul`
   display: flex;
 `
 export const HeaderText = styled.p`
-  font-size: 21px;
+  font-size: ${theme.spaces[17]}px;
 `
 export const MyLink = styled(Link)`
   color: ${props => props.theme.navColor.primary};
   text-decoration: none;
-  font-size: 21px;
+  font-size: ${theme.spaces[17]}px;
 `

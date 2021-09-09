@@ -1,76 +1,63 @@
-import React,{useState} from 'react'
+import React, { useContext, useState } from 'react'
+import { useDispatch } from 'react-redux'
+
+import { clearHistoryAction } from '@/actions/index'
+import { ThemeContext } from '@/context/ThemeProvider'
+
 import {
-  BackgroundSetting,
-  BlockTheme,
-  OptionChange,
-  OptionSelect,
-  TitleHeader,
-  MyButton,
-} from './components'
-import { clearHistory } from '@/actions/index'
-import theme, {
-  coloredTheme,
-  darkTheme,
-  lightTheme,
-} from '@/theme'
-import { connect } from 'react-redux'
-import Display from '@/components/Calculator/Display'
+  ButtonClearHistory,
+  ButtonsWrapper,
+  OptionChangeTheme,
+  OptionSelectTheme,
+  SettingBlock,
+  SettingWrapper,
+  SubtitleSettingPage,
+  TitleSettingPage,
+} from './styles'
 
-const mapDispatchToProps = {
-  clearHistory,
-}
+const SettingsPage = () => {
+  const [selectValue, setSelectValue] = useState('dark')
+  const { changeTheme } = useContext(ThemeContext)
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(({setTheme,clearHistory}) => {
-  const [value, setValue] = useState('dark')
-  
-  const changeThemeHandler = e => {
-    switch (e.target.value) {
-      case 'light':
-        setValue(e.target.value)
-        setTheme(lightTheme)
-        break
-      case 'dark':
-        setValue(e.target.value)
-        setTheme(darkTheme)
-        break
-      case 'colored':
-        setValue(e.target.value)
-        setTheme(coloredTheme)
-        break
-    }
+  const dispatch = useDispatch()
+
+  const selectOnChange = event => {
+    changeTheme(event.target.value)
+    setSelectValue(event.target.value)
   }
 
-  function clearHistoryHandle() {
-    clearHistory()
+  const clearHistoryHandle = () => {
+    dispatch(clearHistoryAction())
   }
 
   return (
-    <BackgroundSetting>
-      <TitleHeader>Settings</TitleHeader>
-      <div>
-        <p>Switch Theme</p>
-        <OptionSelect
-          onChange={changeThemeHandler}
-          value={value}>
-          <OptionChange value="light">
+    <SettingWrapper>
+      <TitleSettingPage>Settings</TitleSettingPage>
+      <SettingBlock>
+        <SubtitleSettingPage>
+          Switch Theme
+        </SubtitleSettingPage>
+        <OptionSelectTheme
+          value={selectValue}
+          onChange={selectOnChange}>
+          <OptionChangeTheme value="light">
             Ligth Theme
-          </OptionChange>
-          <OptionChange value="colored">
+          </OptionChangeTheme>
+          <OptionChangeTheme value="colored">
             Colored Theme
-          </OptionChange>
-          <OptionChange value="dark">
+          </OptionChangeTheme>
+          <OptionChangeTheme value="dark">
             Dark Theme
-          </OptionChange>
-        </OptionSelect>
-        <div>
-          <MyButton onClick={clearHistoryHandle}>
+          </OptionChangeTheme>
+        </OptionSelectTheme>
+        <ButtonsWrapper>
+          <ButtonClearHistory onClick={clearHistoryHandle}>
             Clear All History
-          </MyButton>
-        </div>
-      </div>
-    </BackgroundSetting>
+          </ButtonClearHistory>
+        </ButtonsWrapper>
+      </SettingBlock>
+    </SettingWrapper>
   )
-})
+}
+
+export default SettingsPage

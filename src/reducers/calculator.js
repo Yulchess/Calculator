@@ -1,5 +1,5 @@
-import { calculateValues } from '@/helpers/index'
 import { CALCULATOR_ACTIONS } from '@/constants/actions'
+import { calculateValues } from '@/helpers/index'
 
 const initialState = {
   display: '0',
@@ -41,10 +41,10 @@ const calculatorReducer = (
         ...state,
         operator: action.payload,
       }
-    case CALCULATOR_ACTIONS.CALCULATE_RESULT:
+    case CALCULATOR_ACTIONS.CALCULATE_RESULT: {
       let calculating = calculateValues(state.operator, [
-        +action.payload[0],
-        +action.payload[1],
+        Number(action.payload[0]),
+        Number(action.payload[1]),
       ])
       calculating = Number.isInteger(calculating)
         ? calculating
@@ -59,6 +59,7 @@ const calculatorReducer = (
           } = ${calculating}`,
         ],
       }
+    }
 
     case CALCULATOR_ACTIONS.DELETE_PREV:
       return {

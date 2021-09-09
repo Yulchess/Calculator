@@ -1,36 +1,42 @@
-import React, { lazy, Suspense, useEffect,useState } from 'react'
-import { Switch, Route } from 'react-router-dom'
+import React, {
+  lazy,
+  Suspense,
+  useContext,
+  useEffect,
+} from 'react'
+import { useDispatch } from 'react-redux'
+import { Route, Switch } from 'react-router-dom'
+import { ThemeProvider } from 'styled-components'
+
+import { getLocalStorageAction } from '@/actions/index'
+import Header from '@/components/Header'
+import Loader from '@/components/Loader'
 import {
   HOME_PAGE_ROUTE,
   SETTINGS_PAGE_ROUTE,
 } from '@/constants'
-import { connect, useDispatch } from 'react-redux'
-import { getLocalStorage } from '@/actions/index'
-import Loader from '@/components/Loader'
-import Header from '@/components/Header'
-import { PageLayout } from '@/layouts'
-import SettingsPage from '@/pages/Settings'
-import { ThemeProvider } from 'styled-components'
-import { darkTheme } from '@/theme'
+import { ThemeContext } from '@/context/ThemeProvider'
 import GlobalStyles from '@/globalStyles'
+import { PageLayout } from '@/layouts'
 
 const HomePage = lazy(() => import('@/pages/Home'))
+const SettingsPage = lazy(() => import('@/pages/Settings'))
 
-export const Application = ({ getLocalStorage }) => {
-  const [currentTheme, setCurrentTheme] = useState(
-    darkTheme,
-  )
+const Application = () => {
+  const dispatch = useDispatch()
+
+  const { theme } = useContext(ThemeContext)
 
   useEffect(() => {
     const data = JSON.parse(
       localStorage.getItem('redux-store'),
     )
-    getLocalStorage(data?.calculator)
+    dispatch(getLocalStorageAction(data?.calculator))
   }, [])
 
   return (
-    <Suspense fallback={<Loader />} fefr>
-      <ThemeProvider theme={currentTheme}>
+    <ThemeProvider theme={theme}>
+      <Suspense fallback={<Loader />}>
         <PageLayout>
           <Header />
           <Switch>
@@ -42,27 +48,14 @@ export const Application = ({ getLocalStorage }) => {
             <Route
               exact
               path={SETTINGS_PAGE_ROUTE}
-              render={props => (
-                <SettingsPage
-                  currentTheme={currentTheme}
-                  setTheme={setCurrentTheme}
-                  {...props}
-                />
-              )}
+              component={SettingsPage}
             />
           </Switch>
         </PageLayout>
         <GlobalStyles />
-      </ThemeProvider>
-    </Suspense>
+      </Suspense>
+    </ThemeProvider>
   )
 }
 
-const mapDispatchToProps = {
-  getLocalStorage,
-}
-
-export default connect(
-  null,
-  mapDispatchToProps,
-)(Application)
+export default Application
